@@ -5,7 +5,7 @@ const API_BASE = "https://recruitment-2026-fullstack.onrender.com/api";
 const select = document.getElementById("provinceSelect");
 const results = document.getElementById("results");
 const loader = document.getElementById("loader");
-const searchInput = document.getElementById("constituency-search"); // Get this early
+const searchInput = document.getElementById("constituency-search");
 
 /**
  * Handles error states gracefully
@@ -21,6 +21,8 @@ const handleError = (error) => {
  */
 async function initializeProvinces() {
   try {
+    loader.classList.remove("hidden"); // Use Tailwind class
+
     const response = await fetch(`${API_BASE}/provinces`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const provinces = await response.json();
@@ -45,6 +47,8 @@ async function initializeProvinces() {
     handleError(error);
     select.disabled = true;
     select.innerHTML = `<option value="">Failed to load provinces</option>`;
+  } finally {
+    loader.classList.add("hidden");
   }
 }
 
