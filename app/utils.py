@@ -11,4 +11,15 @@ def find_province_by_constituency(
     Returns:
         province name if found, otherwise None
     """
-    raise NotImplementedError
+    # lower case to make query case-insensitive
+    search_term = constituency_name.lower()
+
+    # loop through each dictionary item (Key=Province, Value=List of Constituencies)
+    for province, constituencies in data.items():
+        # loop through the list of constituencies for this specific province
+        for constituency in constituencies:
+            # case-insensitive compare
+            if constituency.lower() == search_term:
+                return province
+
+    return None
